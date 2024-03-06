@@ -1,0 +1,22 @@
+{
+	"curso":"LEIC",
+	"semestre":"?",
+	"ano":"23-24",
+	"turmas":[
+				{
+					"turma":"LEIC21D",
+					"horario":[
+						{
+							"disciplina":"Laboratorio de Informatica e computadores",
+							"professor":["paulo pereira","prof 2"],
+							"sala":"g.0.0.23",
+							"sigla":"LIC",
+							"codigo":"1865",
+							"modelo":["T","P"],
+							"inicio":"8:00",
+							"fim":"12:30"
+						}
+					]
+				}
+			]
+}

@@ -5,41 +5,45 @@ import com.spire.pdf.utilities.PdfTableExtractor
 import org.apache.pdfbox.pdfparser.PDFParser
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
+import technology.tabula.ObjectExtractor
+import technology.tabula.extractors.SpreadsheetExtractionAlgorithm
 import java.io.File
 
 fun main(args: Array<String>) {
-    println("Hello World!")
-
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
     val fileStr = "C:\\Users\\sergio.zorro\\IdeaProjects\\PS_test_gradle\\src\\main\\resources\\horarios.pdf"
-//    val file = File(fileStr)
-//    val document = PDDocument.load(file)
-//    val stripper = PDFTextStripper()
-//    stripper.sortByPosition = true
-//    val text = stripper.getText(document)
-
-    val doc = PdfDocument()
-    doc.loadFromFile(fileStr)
-    val extractor = PdfTableExtractor(doc)
-
-    for (pageIndex in 0 until doc.pages.count) {
-        val tableLists = extractor.extractTable(pageIndex)
-        if (tableLists != null && tableLists.isNotEmpty()) {
-            for (table in tableLists) {
-                for (i in 0 until table.rowCount) {
-                    for (j in 0 until table.columnCount) {
-                        val text = table.getText(i, j)
-                        println("i:$i,j:$j")
-                        println(text)
-
+    val file = File(fileStr)
+    val document = PDDocument.load(file)
+    val sea = SpreadsheetExtractionAlgorithm()
+    val pi = ObjectExtractor(document).extract()
+    while (pi.hasNext()) {
+        println("###################### NEW PAGE #######################")
+        val page = pi.next()
+        val tables = sea.extract(page)
+        println("tables found:${tables.size}")
+        for (table in tables) {
+            println("---------------new table ${tables.indexOf(table)}----------")
+            val rows = table.getRows();
+            var row=0
+            // iterate over the rows of the table
+            for (cells in rows) {
+                var column=0
+                // print all column-cells of the row plus linefeed
+                for (content in cells) {
+                    if (!content.getText().isNullOrBlank()){
+                        val maxx = content.getMaxX()
+                        val minx = content.getMinX()
+                        val maxy=content.getMaxY()
+                        val miny=content.getMinY()
+                        val text = content.getText().replace("\r", " ");
+                        println("text:$text ->row:$row col:$column Max X:$maxx Min x:$minx Max y:$maxy Min y:$miny")
+                        column++
                     }
-
                 }
+            row++
             }
         }
     }
+
 
     //println(text)
 }

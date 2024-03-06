@@ -16,7 +16,10 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("org.apache.pdfbox:pdfbox:2.0.24")
-    implementation("e-iceblue:spire.pdf.free:5.1.0")
+    implementation("e-iceblue:spire.pdf.free:9.12.3")
+    implementation("technology.tabula:tabula:1.0.5")
+    implementation("org.apache.tika:tika-core:2.2.1")
+    implementation("org.apache.tika:tika-parsers:2.2.1")
 }
 
 tasks.test {
