@@ -1,5 +1,9 @@
 
 import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.text.PDFTextStripper
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 import technology.tabula.ObjectExtractor
 import technology.tabula.extractors.SpreadsheetExtractionAlgorithm
 import java.io.File
@@ -7,6 +11,11 @@ import java.io.File
 fun main() {
     val fileStr = "src/main/resources/horarios.pdf"
     val file = File(fileStr)
+    val url = "https://www.isel.pt/comunidade/estudantes/informacoes-academicas/horarios"
+    val doc = Jsoup.connect(url).get()
+    val elements = doc.select("a").toList().filter {
+        it.attribute("href").value.contains("PSH")
+    }
     val document = PDDocument.load(file)
     val sea = SpreadsheetExtractionAlgorithm()
     val pi = ObjectExtractor(document).extract()

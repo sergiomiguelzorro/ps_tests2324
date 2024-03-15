@@ -20,6 +20,7 @@ dependencies {
     implementation("technology.tabula:tabula:1.0.5")
     implementation("org.apache.tika:tika-core:2.2.1")
     implementation("org.apache.tika:tika-parsers:2.2.1")
+    implementation("org.jsoup:jsoup:1.17.2")
 }
 
 tasks.test {
